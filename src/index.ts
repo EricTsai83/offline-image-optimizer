@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { promises as fs } from "fs";
 import sharp from "sharp";
+import { serveStatic } from "hono/bun";
 
 import { readImageBuffer } from "./helpers/file";
 import {
@@ -12,6 +13,7 @@ import { createImageResponse, createJsonResponse } from "./helpers/response";
 import { parseQuality, parseWidth } from "./helpers/validation";
 
 const app = new Hono();
+app.use("/favicon.ico", serveStatic({ path: "./favicon.ico" }));
 
 app.get("/:src", async (c) => {
   const { src } = c.req.param();
